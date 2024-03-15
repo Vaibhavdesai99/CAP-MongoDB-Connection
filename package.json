@@ -6,14 +6,26 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^7.6.4",
+    "@sap/cds": "^7.7.2",
+    "axios": "^1.6.7",
+    "cors": "^2.8.5",
     "express": "^4",
-    "mongodb": "^6.3.0"
+    "mongodb": "^6.3.0",
+    "@sap/xssec": "^3",
+    "passport": "^0"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve --port 3000"
+  },
+  "cds": {
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
   }
 }

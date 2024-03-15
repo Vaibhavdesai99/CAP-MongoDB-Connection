@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Form</title>
+  </head>
+  <body>
+    <h1>Product Form</h1>
+    <form id="productForm">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br />
+      <label for="description">Description:</label><br />
+      <textarea id="description" name="description"></textarea><br />
+      <label for="price">Price:</label><br />
+      <input type="number" id="price" name="price" /><br /><br />
+      <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <script>
+      function submitData() {
+        // Get form values
+        const name = document.getElementById("name").value;
+        const description = document.getElementById("description").value;
+        const price = document.getElementById("price").value;
+
+        // Construct payload
+        const formData = {
+          name: name,
+          description: description,
+          price: price,
+        };
+
+        // Send data to backend
+        fetch("/odata/v4/mongo/MongoInformation", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text();
+          })
+          .then((data) => {
+            console.log(data); // Handle response from backend
+            alert("Data submitted successfully!");
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with your fetch operation:",
+              error
+            );
+            alert("Error submitting data. Please try again later.");
+          });
+      }
+    </script>
+  </body>
+</html>

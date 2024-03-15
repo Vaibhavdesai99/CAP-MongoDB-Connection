@@ -1,10 +1,12 @@
 const { MongoClient } = require("mongodb");
 const cds = require("@sap/cds");
+const express = require("express");
+const cors = require("cors"); // Import the cors middleware
 
 // Function to connect to MongoDB Atlas
 async function connectToMongoDB() {
   const uri =
-    "mongodb+srv://vaibhavdesai510:fId08hK8Ygx3EUC3@cluster0.wkehbqd.mongodb.net/";
+    "mongodb+srv://vaibhavdesai510:xlmHXGooYrlZCW0S@cluster0.b5kow59.mongodb.net/";
 
   try {
     // Connect to MongoDB using MongoClient
@@ -24,8 +26,13 @@ async function connectToMongoDB() {
 
 // Define the CAP service implementation
 module.exports = cds.service.impl(async function () {
+  const app = express();
+
+  // Enable CORS for all routes
+  app.use(cors());
+
   // Handler for POST requests to insert data
-  this.on("POST", "mogodb", async (req) => {
+  this.on("POST", "MongoInformation", async (req) => {
     const db = await connectToMongoDB(); // Connect to MongoDB
     const collection = db.collection("Cluster0"); // Get collection reference
 
@@ -44,7 +51,7 @@ module.exports = cds.service.impl(async function () {
   });
 
   // Handler for GET requests to fetch data
-  this.on("READ", "mogodb", async (req) => {
+  this.on("READ", "MongoInformation", async (req) => {
     const db = await connectToMongoDB(); // Connect to MongoDB
     const collection = db.collection("Cluster0"); // Get collection reference
 
